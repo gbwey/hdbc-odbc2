@@ -88,7 +88,7 @@ executable runtests
     build-depends:
         base
       , HUnit
-      , HDBC-odbc
+      , hdbc-odbc2
       , QuickCheck
       , testpack
       , containers
@@ -116,7 +116,7 @@ executable stresstest
     buildable: False
     build-depends:
         base
-      , HDBC-odbc
+      , hdbc-odbc2
       , random
       , resource-pool
   main-is: stresstest.hs

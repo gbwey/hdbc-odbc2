@@ -2,6 +2,8 @@
 -}
 module Database.HDBC.ODBC.Utils where
 import Foreign.Ptr
+import Database.HDBC.ODBC.Api.Types
+import Foreign.C.Types
 import Control.Exception
 import Foreign.Marshal.Array
 

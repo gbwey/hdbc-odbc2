@@ -89,7 +89,6 @@ c_sqlCloseCursor hStmt = do
 foreign import #{CALLCONV} safe "sql.h SQLDisconnect"
   imp_sqlDisconnect :: SQLHDBC -> IO SQLRETURN
 
-c_sqlDisconnect :: SQLHDBC -> IO SQLRETURN
 c_sqlDisconnect hDbc = do
   result <- imp_sqlDisconnect hDbc
   hdbcTrace $ printf "SQLDisconnect(%s) returned %d" (show hDbc) result

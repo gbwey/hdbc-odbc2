@@ -31,8 +31,7 @@ fromOTypeInfo colname datatype colsize nullable =
                                  _ -> Nothing
                 }
 
-fromOTypeCol :: [SqlValue] -> SqlColDesc
-fromOTypeCol (_:_:_:colname:datatype:_:colsize:_:_:_:nullable:_:_:_:_:_:_) =
+fromOTypeCol (_:_:_:colname:datatype:_:colsize:buflen:decdig:precrad:nullable:_:_:_:subtype:octetlen:_) =
     fromOTypeInfo (fromSql colname)
                   (fromIntegral ((fromSql datatype)::Int))
                   (fromSql colsize)
