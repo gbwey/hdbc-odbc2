@@ -106,7 +106,7 @@ wrapStmt sstate = Statement
   { execute        = fexecute sstate
   , executeRaw     = fexecuteraw sstate
   , executeMany    = fexecutemany sstate
-  , finish         = ffinish sstate
+  , finish         = ffinalize sstate
   , fetchRow       = ffetchrow sstate
   , originalQuery  = (squery sstate)
   , getColumnNames = readMVar (colinfomv sstate) >>= (return . map colName)
