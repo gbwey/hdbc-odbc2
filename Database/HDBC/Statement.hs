@@ -1,3 +1,5 @@
+{-# OPTIONS -Wall #-}
+{-# OPTIONS -Wno-unsupported-calling-conventions #-}
 {-# LANGUAGE DeriveDataTypeable #-}
 module Database.HDBC.Statement
     (
@@ -31,14 +33,14 @@ data Statement = Statement
         This function should automatically call finish() to finish the previous
         execution, if necessary.
         -}
-     execute :: [SqlValue] -> IO (Either Int [SqlColDesc]),
+     execute :: !([SqlValue] -> IO (Either Int [SqlColDesc])),
 
      {- | Execute the statement as-is, without supplying any
         positional parameters.  This is intended for statements for
         which the results aren't interesting or present (e.g., DDL or
         DML commands).  If your query contains placeholders, this will
         certainly fail; use 'execute' instead. -}
-     executeRaw :: IO (),
+     executeRaw :: !(IO ()),
 
      {- | Execute the query with many rows.
         The return value is the return value from the final row
@@ -50,15 +52,15 @@ data Statement = Statement
         need to be compiled only once.
 
         This is most useful for non-SELECT statements. -}
-     executeMany :: [[SqlValue]] -> IO (),
+     executeMany :: !([[SqlValue]] -> IO ()),
 
      {- | Abort a query in progress -- usually not needed. -}
-     finish :: IO (),
+     finish :: !(IO ()),
 
      {- | Fetches one row from the DB.  Returns 'Nothing' if there
         are no more rows.  Will automatically call 'finish' when
         the last row is read. -}
-     fetchRow :: IO (Maybe [SqlValue]),
+     fetchRow :: !(IO (Maybe [SqlValue])),
 
      {- | Returns a list of the column names in the result.
         For maximum portability, you should not assume that
@@ -78,12 +80,12 @@ data Statement = Statement
         A simple getColumnNames implementation could simply
         apply @map fst@ to the return value of 'describeResult'.
         -}
-     getColumnNames :: IO [String],
+     getColumnNames :: !(IO [String]),
 
 
      {- | The original query that this 'Statement' was prepared
           with. -}
-     originalQuery :: String,
+     originalQuery :: !String,
      {- | Obtain information about the columns in the result set.
           Must be run only after 'execute'.  The String in the result
           set is the column name.
@@ -97,9 +99,9 @@ data Statement = Statement
           Please see caveats under 'getColumnNames' for information
           on the column name field here.
  -}
-     describeResult :: IO [SqlColDesc],
+     describeResult :: !(IO [SqlColDesc]),
 
-     nextResultSet :: IO (Maybe (Either Int [SqlColDesc]))
+     nextResultSet :: !(IO (Maybe (Either Int [SqlColDesc])))
     }
 
 {- | The main HDBC exception object.  As much information as possible
@@ -107,9 +109,9 @@ is passed from the database through to the application through this object.
 
 Errors generated in the Haskell layer will have seNativeError set to -1.
 -}
-data SqlError = SqlError {seState :: String,
-                          seNativeError :: Int,
-                          seErrorMsg :: String}
+data SqlError = SqlError {seState :: !String,
+                          seNativeError :: !Int,
+                          seErrorMsg :: !String}
                 deriving (Eq, Show, Read, Typeable)
 
 

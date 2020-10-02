@@ -2,7 +2,8 @@
 {-# CFILES hdbc-odbc-helper.c #-}
 -- Above line for hugs
 {-# LANGUAGE EmptyDataDecls #-}
-
+{-# OPTIONS -Wall #-}
+{-# OPTIONS -Wno-unsupported-calling-conventions #-}
 module Database.HDBC.ODBC.Statement where -- (
 --   fGetQueryInfo,
 --   newSth,
@@ -16,12 +17,12 @@ import Database.HDBC.DriverUtils
 import Database.HDBC.ODBC.Api.Errors
 import Database.HDBC.ODBC.Api.Imports
 import Database.HDBC.ODBC.Api.Types
-import Database.HDBC.ODBC.Utils
+--import Database.HDBC.ODBC.Utils
 import Database.HDBC.ODBC.Log
 import Database.HDBC.ODBC.TypeConv
 import Database.HDBC.ODBC.Wrappers
 
-import Foreign.C.String (castCUCharToChar)
+--import Foreign.C.String (castCUCharToChar)
 import Foreign.C.Types
 import Foreign.ForeignPtr
 import Foreign.Ptr
@@ -523,20 +524,20 @@ data ColBuf
 --     http://msdn.microsoft.com/en-us/library/ms714556(v=VS.85).aspx
 -- The Ptr values point to the appropriate C types
 data BindCol
-  = BindColString  (Ptr CChar) #{type SQLLEN} #{type SQLUSMALLINT}
-  | BindColWString (Ptr CWchar) #{type SQLLEN} #{type SQLUSMALLINT}
-  | BindColBit     (Ptr CUChar)
-  | BindColTinyInt (Ptr CChar)
-  | BindColShort   (Ptr CShort)
-  | BindColLong    (Ptr CLong)
-  | BindColBigInt  (Ptr #{type SQLBIGINT})
-  | BindColFloat   (Ptr CFloat)
-  | BindColDouble  (Ptr CDouble)
-  | BindColBinary  (Ptr CUChar) #{type SQLLEN} #{type SQLUSMALLINT}
-  | BindColDate    (Ptr StructDate)
-  | BindColTime    (Ptr StructTime)
-  | BindColTimestamp (Ptr StructTimestamp)
-  | BindColGetData #{type SQLUSMALLINT}
+  = BindColString  !(Ptr CChar) !(#{type SQLLEN}) !(#{type SQLUSMALLINT})
+  | BindColWString !(Ptr CWchar) !(#{type SQLLEN}) !(#{type SQLUSMALLINT})
+  | BindColBit     !(Ptr CUChar)
+  | BindColTinyInt !(Ptr CChar)
+  | BindColShort   !(Ptr CShort)
+  | BindColLong    !(Ptr CLong)
+  | BindColBigInt  !(Ptr #{type SQLBIGINT})
+  | BindColFloat   !(Ptr CFloat)
+  | BindColDouble  !(Ptr CDouble)
+  | BindColBinary  !(Ptr CUChar) !(#{type SQLLEN}) !(#{type SQLUSMALLINT})
+  | BindColDate    !(Ptr StructDate)
+  | BindColTime    !(Ptr StructTime)
+  | BindColTimestamp !(Ptr StructTimestamp)
+  | BindColGetData !(#{type SQLUSMALLINT})
 
 
 -- Intervals and GUIDs have not been implemented, since there is no
@@ -590,9 +591,9 @@ data BindCol
 -- This struct, and the ones which follow, are described here:
 --     http://msdn.microsoft.com/en-us/library/ms714556(v=VS.85).aspx
 data StructDate = StructDate
-  #{type SQLSMALLINT}   -- year
-  #{type SQLUSMALLINT}  -- month
-  #{type SQLUSMALLINT}  -- day
+  !(#{type SQLSMALLINT})   -- year
+  !(#{type SQLUSMALLINT})  -- month
+  !(#{type SQLUSMALLINT})  -- day
  deriving Show
 
 instance Storable StructDate where
@@ -610,9 +611,9 @@ instance Storable StructDate where
 
 -- | StructTime is used to marshals the TIME_STRUCT:
 data StructTime = StructTime
-  #{type SQLUSMALLINT} -- hour
-  #{type SQLUSMALLINT} -- minute
-  #{type SQLUSMALLINT} -- second
+  !(#{type SQLUSMALLINT}) -- hour
+  !(#{type SQLUSMALLINT}) -- minute
+  !(#{type SQLUSMALLINT}) -- second
 
 instance Storable StructTime where
   sizeOf _    = #{size TIME_STRUCT}
@@ -628,13 +629,13 @@ instance Storable StructTime where
 
 -- | StructTimestamp is used to marshal the TIMESTAMP_STRUCT;
 data StructTimestamp = StructTimestamp
-  #{type SQLSMALLINT}   -- year
-  #{type SQLUSMALLINT}  -- month
-  #{type SQLUSMALLINT}  -- day
-  #{type SQLUSMALLINT}  -- hour
-  #{type SQLUSMALLINT}  -- minute
-  #{type SQLUSMALLINT}  -- second
-  #{type SQLUINTEGER}   -- fraction
+  !(#{type SQLSMALLINT})   -- year
+  !(#{type SQLUSMALLINT})  -- month
+  !(#{type SQLUSMALLINT})  -- day
+  !(#{type SQLUSMALLINT})  -- hour
+  !(#{type SQLUSMALLINT})  -- minute
+  !(#{type SQLUSMALLINT})  -- second
+  !(#{type SQLUINTEGER})   -- fraction
 
 instance Storable StructTimestamp where
   sizeOf _    = #{size TIMESTAMP_STRUCT}

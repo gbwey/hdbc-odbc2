@@ -1,10 +1,12 @@
 {-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS -Wall #-}
+{-# OPTIONS -Wno-unsupported-calling-conventions #-}
 module Database.HDBC.ODBC.Log
   ( hdbcLog
   , hdbcTrace
   ) where
 
-import System.IO
+--import System.IO
 
 hdbcLog :: String -> IO ()
 hdbcLog _ = return ()

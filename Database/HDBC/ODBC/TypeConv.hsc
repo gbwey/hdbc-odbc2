@@ -1,6 +1,8 @@
 -- -*- mode: haskell; -*-
 {-# CFILES hdbc-odbc-helper.c #-}
 -- Above line for hugs
+{-# OPTIONS -Wall #-}
+{-# OPTIONS -Wno-unsupported-calling-conventions #-}
 module Database.HDBC.ODBC.TypeConv(fromOTypeInfo, fromOTypeCol) where
 import Database.HDBC.Types
 import Database.HDBC
@@ -31,7 +33,8 @@ fromOTypeInfo colname datatype colsize nullable =
                                  _ -> Nothing
                 }
 
-fromOTypeCol (_:_:_:colname:datatype:_:colsize:buflen:decdig:precrad:nullable:_:_:_:subtype:octetlen:_) =
+fromOTypeCol :: [SqlValue] -> SqlColDesc
+fromOTypeCol (_:_:_:colname:datatype:_:colsize:_buflen:decdig:_precrad:nullable:_:_:_:_subtype:_octetlen:_) =
     fromOTypeInfo (fromSql colname)
                   (fromIntegral ((fromSql datatype)::Int))
                   (fromSql colsize)

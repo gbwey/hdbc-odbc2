@@ -38,7 +38,7 @@ import System.Mem.Weak (addFinalizer)
 import qualified Control.Concurrent.ReadWriteVar as RWV
 import qualified Data.Foldable as F
 
-data EnvWrapper = EnvWrapper
+newtype EnvWrapper = EnvWrapper
   { envHandle :: MVar (Maybe SQLHENV) -- ^ If there is Nothing here, environment is already freed
   }
 

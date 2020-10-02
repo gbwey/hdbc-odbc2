@@ -48,6 +48,9 @@ library
     , Database.HDBC.Locale
     , Database.HDBC.Utils
 
+  if impl(ghc >= 8.8)
+    ghc-options: -fwrite-ide-info -hiedir=.hie
+
   extensions:
       ExistentialQuantification
     , ForeignFunctionInterface
@@ -64,6 +67,7 @@ library
   build-depends:
       base >= 4.3.1.0 && < 5
     , concurrent-extra >= 0.7.0.8
+    , deepseq
     , mtl
     , time>=1.2.0.3
     , utf8-string

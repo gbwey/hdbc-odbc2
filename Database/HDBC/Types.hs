@@ -183,7 +183,7 @@ functions on it.
 
 Or, you can use 'withWConn'.
 -}
-data ConnWrapper = forall conn. IConnection conn => ConnWrapper conn
+data ConnWrapper = forall conn. IConnection conn => ConnWrapper !conn
 
 {- | Unwrap a 'ConnWrapper' and pass the embedded 'IConnection' to
 a function.  Example:

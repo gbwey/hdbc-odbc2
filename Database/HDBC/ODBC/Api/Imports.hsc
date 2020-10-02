@@ -1,4 +1,6 @@
 {-# LANGUAGE ForeignFunctionInterface, OverloadedStrings #-}
+{-# OPTIONS -Wall #-}
+{-# OPTIONS -Wno-unsupported-calling-conventions #-}
 module Database.HDBC.ODBC.Api.Imports
   ( sQL_HANDLE_ENV
   , sQL_HANDLE_DBC

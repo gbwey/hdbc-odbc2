@@ -1,3 +1,5 @@
+{-# OPTIONS -Wall #-}
+{-# OPTIONS -Wno-unsupported-calling-conventions #-}
 module Database.HDBC.ODBC.ConnectionImpl where
 
 import qualified Database.HDBC.Statement as Types
@@ -7,23 +9,23 @@ import Control.Exception (finally)
 
 data Connection =
     Connection {
-                getQueryInfo :: String -> IO ([SqlColDesc], [SqlColDesc]),
-                disconnect :: IO (),
-                commit :: IO (),
-                rollback :: IO (),
-                run :: String -> [Types.SqlValue] -> IO (Either Int [SqlColDesc]),
-                prepare :: String -> IO Types.Statement,
-                clone :: IO Connection,
-                hdbcDriverName :: String,
-                hdbcClientVer :: String,
-                proxiedClientName :: String,
-                proxiedClientVer :: String,
-                dbServerVer :: String,
-                dbTransactionSupport :: Bool,
-                getTables :: IO [String],
-                describeTable :: String -> IO [SqlColDesc],
+                getQueryInfo :: !(String -> IO ([SqlColDesc], [SqlColDesc])),
+                disconnect :: !(IO ()),
+                commit :: !(IO ()),
+                rollback :: !(IO ()),
+                run :: !(String -> [Types.SqlValue] -> IO (Either Int [SqlColDesc])),
+                prepare :: !(String -> IO Types.Statement),
+                clone :: !(IO Connection),
+                hdbcDriverName :: !String,
+                hdbcClientVer :: !String,
+                proxiedClientName :: !String,
+                proxiedClientVer :: !String,
+                dbServerVer :: !String,
+                dbTransactionSupport :: !Bool,
+                getTables :: !(IO [String]),
+                describeTable :: !(String -> IO [SqlColDesc]),
                 -- | Changes AutoCommit mode of the given connection. Returns previous value.
-                setAutoCommit :: Bool -> IO Bool
+                setAutoCommit :: !(Bool -> IO Bool)
                }
 
 instance Types.IConnection Connection where

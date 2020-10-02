@@ -13,6 +13,7 @@ by a column.
 Written by John Goerzen, jgoerzen\@complete.org
 -}
 {-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE DeriveGeneric #-}
 
 module Database.HDBC.ColTypes (SqlColDesc(..),
                                SqlTypeId(..),
@@ -21,6 +22,8 @@ module Database.HDBC.ColTypes (SqlColDesc(..),
 
 where
 import Data.Dynamic
+import Control.DeepSeq (NFData)
+import GHC.Generics (Generic)
 
 {- | The description of a column.
 
@@ -36,14 +39,16 @@ The colOctetLength field is defined for character and binary types, and
 gives the number of bytes the column requires, regardless of encoding.
 -}
 data SqlColDesc =
-   SqlColDesc {colName :: String -- ^ Column name
-              ,colType :: SqlTypeId   -- ^ Type of data stored here
-              ,colSize :: Maybe Int   -- ^ The size of a column
-              ,colOctetLength :: Maybe Int -- ^ The maximum size in octets
-              ,colDecDigits :: Maybe Int -- ^ Digits to the right of the period
-              ,colNullable :: Maybe Bool -- ^ Whether NULL is acceptable
+   SqlColDesc {colName :: !String -- ^ Column name
+              ,colType :: !SqlTypeId   -- ^ Type of data stored here
+              ,colSize :: !(Maybe Int)   -- ^ The size of a column
+              ,colOctetLength :: !(Maybe Int) -- ^ The maximum size in octets
+              ,colDecDigits :: !(Maybe Int) -- ^ Digits to the right of the period
+              ,colNullable :: !(Maybe Bool) -- ^ Whether NULL is acceptable
               }
-   deriving (Eq, Read, Show, Typeable)
+   deriving (Eq, Read, Show, Typeable, Generic)
+
+instance NFData SqlColDesc
 
 {- | The type identifier for a given column.
 
@@ -79,11 +84,13 @@ data SqlTypeId =
     | SqlTimestampWithZoneT     -- ^ Combined date and time, with timezone
     | SqlUTCDateTimeT           -- ^ UTC date\/time
     | SqlUTCTimeT               -- ^ UTC time
-    | SqlIntervalT SqlInterval  -- ^ A time or date difference
+    | SqlIntervalT !SqlInterval  -- ^ A time or date difference
     | SqlGUIDT                  -- ^ Global unique identifier
-    | SqlUnknownT String        -- ^ A type not represented here; implementation-specific information in the String
+    | SqlUnknownT !String        -- ^ A type not represented here; implementation-specific information in the String
 
-  deriving (Eq, Show, Read, Typeable)
+  deriving (Eq, Show, Read, Typeable, Generic)
+
+instance NFData SqlTypeId
 
 {- | The different types of intervals in SQL. -}
 data SqlInterval =
@@ -100,4 +107,6 @@ data SqlInterval =
     | SqlIntervalHourToMinuteT  -- ^ Difference in hours+minutes
     | SqlIntervalHourToSecondT  -- ^ Difference in hours+seconds
     | SqlIntervalMinuteToSecondT -- ^ Difference in minutes+seconds
-      deriving (Eq, Show, Read, Typeable)
+      deriving (Eq, Show, Read, Typeable, Generic)
+
+instance NFData SqlInterval
