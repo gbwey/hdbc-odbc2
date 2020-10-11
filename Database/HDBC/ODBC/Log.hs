@@ -1,5 +1,4 @@
 {-# LANGUAGE OverloadedStrings #-}
-{-# OPTIONS -Wall #-}
 {-# OPTIONS -Wno-unsupported-calling-conventions #-}
 module Database.HDBC.ODBC.Log
   ( hdbcLog

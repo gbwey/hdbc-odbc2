@@ -1,4 +1,3 @@
-{-# OPTIONS -Wall #-}
 {-# OPTIONS -Wno-unsupported-calling-conventions #-}
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE StandaloneDeriving #-}

@@ -1,4 +1,3 @@
-{-# OPTIONS -Wall #-}
 {-# OPTIONS -Wno-unsupported-calling-conventions #-}
 module Database.HDBC.ODBC.ConnectionImpl where
 
