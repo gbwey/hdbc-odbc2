@@ -111,7 +111,7 @@ Errors generated in the Haskell layer will have seNativeError set to -1.
 data SqlError = SqlError {seState :: !String,
                           seNativeError :: !Int,
                           seErrorMsg :: !String}
-                deriving (Eq, Show, Read, Typeable)
+                deriving (Eq, Show, Typeable)
 
 
 instance Exception SqlError where

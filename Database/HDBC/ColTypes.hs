@@ -46,7 +46,7 @@ data SqlColDesc =
               ,colDecDigits :: !(Maybe Int) -- ^ Digits to the right of the period
               ,colNullable :: !(Maybe Bool) -- ^ Whether NULL is acceptable
               }
-   deriving (Eq, Read, Show, Typeable, Generic)
+   deriving (Eq, Show, Typeable, Generic)
 
 instance NFData SqlColDesc
 
@@ -88,7 +88,7 @@ data SqlTypeId =
     | SqlGUIDT                  -- ^ Global unique identifier
     | SqlUnknownT !String        -- ^ A type not represented here; implementation-specific information in the String
 
-  deriving (Eq, Show, Read, Typeable, Generic)
+  deriving (Eq, Show, Typeable, Generic)
 
 instance NFData SqlTypeId
 
@@ -107,6 +107,6 @@ data SqlInterval =
     | SqlIntervalHourToMinuteT  -- ^ Difference in hours+minutes
     | SqlIntervalHourToSecondT  -- ^ Difference in hours+seconds
     | SqlIntervalMinuteToSecondT -- ^ Difference in minutes+seconds
-      deriving (Eq, Show, Read, Typeable, Generic)
+      deriving (Eq, Show, Typeable, Generic)
 
 instance NFData SqlInterval
