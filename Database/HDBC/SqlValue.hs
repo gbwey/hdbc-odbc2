@@ -34,7 +34,6 @@ import qualified Data.Text as TS
 import qualified Data.Text.Lazy as TL
 import Control.DeepSeq (NFData)
 import GHC.Generics (Generic)
-import Data.Data
 
 quickError :: (Typeable a, Convertible SqlValue a) => SqlValue -> ConvertResult a
 quickError sv = convError "incompatible types" sv
@@ -221,7 +220,7 @@ data SqlValue = SqlString !String
 --              | SqlEpochTime !Integer      -- ^ DEPRECATED Representation of ClockTime or CalendarTime.  Use SqlPOSIXTime instead.
 --              | SqlTimeDiff !Integer -- ^ DEPRECATED Representation of TimeDiff.  Use SqlDiffTime instead.
               | SqlNull         -- ^ NULL in SQL or Nothing in Haskell.
-     deriving (Data, Show, Generic)
+     deriving (Show, Generic)
 
 instance NFData SqlValue
 

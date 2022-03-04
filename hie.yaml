@@ -1,0 +1,31 @@
+cradle:
+  stack:
+    - path: "././"
+      component: "hdbc-odbc2:lib"
+
+    - path: "./testsrc/runtests.hs"
+      component: "hdbc-odbc2:exe:runtests"
+
+    - path: "./testsrc/SpecificDB.hs"
+      component: "hdbc-odbc2:exe:runtests"
+
+    - path: "./testsrc/SpecificDBTests.hs"
+      component: "hdbc-odbc2:exe:runtests"
+
+    - path: "./testsrc/TestMisc.hs"
+      component: "hdbc-odbc2:exe:runtests"
+
+    - path: "./testsrc/TestSbasics.hs"
+      component: "hdbc-odbc2:exe:runtests"
+
+    - path: "./testsrc/TestUtils.hs"
+      component: "hdbc-odbc2:exe:runtests"
+
+    - path: "./testsrc/Testbasics.hs"
+      component: "hdbc-odbc2:exe:runtests"
+
+    - path: "./testsrc/Tests.hs"
+      component: "hdbc-odbc2:exe:runtests"
+
+    - path: "./stresstest/stresstest.hs"
+      component: "hdbc-odbc2:exe:stresstest"
